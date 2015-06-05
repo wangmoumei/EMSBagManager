@@ -1,0 +1,53 @@
+﻿@model MailManager.Models.T_Base_Mail
+@{
+    Layout = null;
+}
+
+<h2 class="contentTitle">代取信件登记</h2>
+
+
+<div class="pageContent">
+	
+	<form method="post" action="/Mail/SendBackSave" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+		<div class="pageFormContent nowrap" layoutH="97">
+            <input type="hidden" name="ID" value="@Model.ID" />
+			<dl>
+				<dt>编号：</dt>
+				<dd>
+					<input type="text" disabled="disabled"  value="@Model.Number"/>
+				</dd>
+			</dl>
+            <dl>
+				<dt>取件人：</dt>
+				<dd>
+					<input type="text" disabled="disabled"  value="@Model.Name"/>
+				</dd>
+			</dl>
+            <dl class="nowrap">
+			    <dt>退改类型：</dt>
+			    <label><input type="radio" name="type" checked="checked" value="5" id="sendBack" />退回</label>
+                <label><input type="radio" name="type" value="6" id="resend">改发</label>
+		    </dl>
+            <dl class="nowrap">
+			    <dt id="reason">退回原因：</dt>
+			    <dd><textarea name="tip" cols="80" rows="2"></textarea></dd>
+		    </dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+</div>
+<script>
+    var sendBack = document.getElementById("reason");
+    document.getElementById("sendBack").onchange = function () {
+        sendBack.innerText = "退回原因：";
+    }
+    document.getElementById("resend").onchange = function () {
+        sendBack.innerText = "改发地址：";
+    }
+    </script>
+

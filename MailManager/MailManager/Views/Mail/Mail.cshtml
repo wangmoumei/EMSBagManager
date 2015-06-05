@@ -1,0 +1,107 @@
+﻿@model List<MailManager.Models.T_Base_Mail>
+@{
+    Layout = null;
+}
+
+<form id="pagerForm" method="post" action="/mail/mail">
+	<input type="hidden" name="pageNum" value="@ViewBag.pageNum" />
+	<input type="hidden" name="numPerPage" value="@ViewBag.numPerPage" />
+	<input type="hidden" name="orderField" value="@ViewBag.orderField" />
+	<input type="hidden" name="orderDirection" value="@ViewBag.orderDirection" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="/mail/mail" method="post">
+	<div class="searchBar">
+		<ul class="searchContent">
+			<li>
+				<label>编号：</label>
+				<input type="text" name="keywords" value="@ViewBag.keywords"/>
+			</li>
+		</ul>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="/Mail/Create" target="navTab" rel="MailAdd"><span>录入新信件</span></a></li>
+			<li><a title="确实这些信件已经取走了吗?" target="selectedTodo" rel="ids" postType="string" href="/mail/DELETES" class="delete"><span>批量取件标记</span></a></li>
+		</ul>
+	</div>
+	<table class="table" width="1200" layoutH="138">
+		<thead>
+			<tr>
+				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="140" orderField="CreateTime" @if (ViewBag.orderField == "CreateTime")
+                                    { @: class="@ViewBag.orderDirection"
+                } >编号</th>
+				<th width="140" orderField="Name" @if (ViewBag.orderField == "Name"){ @: class="@ViewBag.orderDirection"
+                }>收件人</th>
+				<th width="120" orderField="CreateTime" @if (ViewBag.orderField == "CreateTime")
+                                    { @: class="@ViewBag.orderDirection"
+                }>添加时间</th>
+				<th width="80" orderField="Type" @if (ViewBag.orderField == "Type")
+                                            { @: class="@ViewBag.orderDirection"
+                }>状态</th>
+				<th width="200">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+            @foreach(var item in Model)
+            {
+			<tr target="sid_user" rel="1">
+				<td><input name="ids" value="@item.ID" type="checkbox"></td>
+				<td>@item.Number</td>
+				<td>@item.Name</td>
+				<td>@item.CreateTime</td>
+				<td>@if(item.Type == 1){@:尚未通知取件
+    }
+        else if (item.Type == 3)
+        {
+            @:已通知取件
+        }
+
+
+				</td>
+				<td>
+					<a title="确定该信件已被取走？" target="ajaxTodo" href="/mail/DELETE?id=@item.ID">取件</a>
+                    <a href="/mail/other?id=@item.ID" target="dialog" rel="other">代取登记</a>
+					<a target="dialog" rel="editMail" href="/mail/edit?id=@item.ID">修改</a>
+                    <a target="navTab" rel="SendBack" href="/mail/sendback?id=@item.ID">退改</a>
+				</td>
+			</tr>
+            }
+		</tbody>
+	</table>
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+                <option value="5" 
+                @if (ViewBag.numPerPage == 5){@:selected =true
+                }
+                >5</option>
+				<option value="10"
+                    @if(ViewBag.numPerPage == 10){ @:selected =true
+                    }
+                    >10</option>
+				<option value="20" @if(ViewBag.numPerPage == 20){ @:selected =true
+                    }
+                    >20</option>
+				<option value="50" @if(ViewBag.numPerPage == 50){ @:selected =true
+                    }
+                    >50</option>
+			</select>
+			<span>条，共 @ViewBag.totalCount 条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="@ViewBag.totalCount" numPerPage="@ViewBag.numPerPage" pageNumShown="5" currentPage="@ViewBag.pageNum"></div>
+
+	</div>
+</div>

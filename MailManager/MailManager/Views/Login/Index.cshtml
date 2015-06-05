@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>信件管理系统-登陆</title>
+    <link href="~/Content/themes/css/login.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <div id="login">
+		<div id="login_header">
+			<h1 class="login_logo">
+				<a href="http://demo.dwzjs.com"><img src="~/Content/themes/default/images/login_logo.png" /></a>
+			</h1>
+			<div class="login_headerContent">
+				<h2 class="login_title"><img src="~/Content/themes/default/images/login_title.png" /></h2>
+			</div>
+		</div>
+		<div id="login_content">
+			<div class="loginForm">
+
+					<p>
+						<label>用户名：</label>
+						<input type="text" name="UserID" id="UserID" size="20" class="login_input" />
+					</p>
+					<p>
+						<label>密码：</label>
+						<input type="password" name="Password" id="Password" size="20" class="login_input" />
+					</p>
+					<div class="login_bar">
+						<input class="sub" id="sub" type="submit" value=" " />
+					</div>
+
+			</div>
+			<div class="login_banner"><img src="~/Content/themes/default/images/login_banner.jpg" /></div>
+		</div>
+		<div id="login_footer">
+			Copyright &copy; 2015  Inc. All Rights Reserved.
+		</div>
+	</div>
+    <script>
+
+        document.getElementById("sub").onclick = function () {
+                var user = document.getElementById("UserID"), pass = document.getElementById("Password");
+
+                var UserID = user.value;
+                var Password = pass.value;
+                if (UserID == "") {
+                    user.focus();
+                    return;
+                }
+                if (Password == "") {
+                    pass.focus();
+                    return;
+                }
+                this.disabled = "disabled";
+                var that = this;
+                setTimeout(function () { that.disabled = "" }, 2000);
+                $.ajax({
+                    url: "/Login/Login",
+                    type: "POST",
+                    dataType: "json",
+                    data: "name=" + UserID + '&pass=' + Password,
+                    success: function (data) {
+                        if (!data.success)
+                            alert(data.msg)
+                        else
+                        window.location.href = "/home/index";
+                    },
+                    timeout: 10000,
+                    error: function (data) {
+                        alert("检查网络链接");
+                    }
+
+                });
+                return;
+            }
+
+
+    </script>
+</body>
+</html>

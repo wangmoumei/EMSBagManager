@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<h2 class="contentTitle">信息录入</h2>
+
+
+<div class="pageContent">
+	
+	<form method="post" action="/info/save" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+		<div class="pageFormContent nowrap" layoutH="97">
+            <dl class="nowrap">
+			<dt>收件人身份：</dt>
+			    <dd>
+				    <label><input type="radio" name="Type" value="1" checked="checked" id="checkStu1" />学生</label>
+                    <label><input type="radio" name="Type" value="2" id="checkTea1">教职工</label>
+			    </dd>
+		    </dl>
+            <dl>
+				<dt id="setContent1">班级名：</dt>
+				<dd>
+					<input type="text" name="Name" maxlength="20" class="required"/>
+					<span class="info"></span>
+				</dd>
+			</dl>
+
+            <dl id="student1">
+				<dt>联系人姓名：</dt>
+				<dd>
+					<input type="text" name="NickName" maxlength="20" class="required" id="studentName1"/>
+					<span class="info"></span>
+				</dd>
+			</dl>
+
+            <dl>
+				<dt>电话：</dt>
+				<dd>
+					<input type="text" name="Phone" class="phone required"/>
+					<span class="info">有信件到达时，将短信通知</span>
+				</dd>
+			</dl>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+</div>
+
+
+<script type="text/javascript">
+    var stuBox1 = document.getElementById("student1");
+    var content1 = document.getElementById("setContent1");
+    var studentName1 = document.getElementById("studentName1");
+
+    document.getElementById("checkStu1").onchange = function () {
+        stuBox1.style.display = "block";
+        content1.innerText = "班级名：";
+        studentName1.className = "required";
+    }
+    document.getElementById("checkTea1").onchange = function () {
+        stuBox1.style.display = "none";
+        content1.innerText = "姓名";
+        studentName1.className = "";
+    }
+</script>
+

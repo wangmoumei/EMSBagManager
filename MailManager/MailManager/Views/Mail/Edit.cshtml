@@ -1,0 +1,99 @@
+﻿@model MailManager.Models.T_Base_Mail
+@{
+    Layout = null;
+}
+<h2 class="contentTitle">添加订单</h2>
+<form action="/mail/saveedit" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="97">
+        <input name="ID" type="hidden" value="@Model.ID" />
+		<dl class="nowrap">
+			<dt>收件人身份：</dt>
+			<dd>
+				<label><input type="radio" value="1" name="type" @if(ViewBag.type == 1){
+                                           @:checked="checked"
+                                           }
+                     id="checkStu" />学生</label><label><input type="radio" name="type" value="2" id="checkTea" @if(ViewBag.type == 2){
+                                           @:checked="checked"
+                                           }>教职工</label>
+			</dd>
+		</dl>
+		    <dl class="nowrap">
+			    <dt id="setContent">@if(ViewBag.type == 2){
+                                           @:教职工姓名：
+                                           }else{
+                            @:班级   
+                           }
+			    </dt>
+			    <dd>
+				    <input id="inputOrg1" name="org1.ID" value="@Model.ClassID" type="hidden"/>
+				    <input class="required" name="org1.Name" type="text" id="getInput" postField="keyword" suggestFields="Name" 
+					    suggestUrl="/Info/GetClass" lookupGroup="org1" value ="@ViewBag.Name" />
+			    </dd>
+		    </dl>
+		    <dl class="nowrap" id="student" @if(ViewBag.type == 2){
+                                           @:style="display:none"
+                                           }>
+			    <dt>姓名：</dt>
+			    <dd>
+				    <input type="text" name="NickName" id="studentName" class="required" value ="@Model.Name" >
+			    </dd>
+		    </dl>
+        
+        <dl class="nowrap"@if (Model.Type != 2){
+            @:style="display:none"
+        }>
+			    <dt>代取人：</dt>
+			    <dd>
+				    <input type="text" name="pName" class="" value ="@Model.Pname" >
+			    </dd>
+		</dl>
+        <dl class="nowrap" @if (Model.Type != 2){
+            @:style="display:none"
+        }>
+			    <dt>代取人联系电话：</dt>
+			    <dd>
+				    <input type="text" name="Phone" class="" value ="@Model.Phone" >
+			    </dd>
+		    </dl>
+        <dl class="nowrap"@if (Model.Type < 4 ){
+            @:style="display:none"
+            }><dt id="reason">@if(Model.Type == 5){  
+                              @:退回原因：
+                              }
+                              else if (Model.Type == 6)
+                              {
+                                  @:改发地址:
+                              }
+              </dt>
+        
+			    <dd><textarea name="tip" cols="80" rows="2">@Model.Tip</textarea></dd>
+		    </dl>
+	</div>
+	<div class="formBar">
+		<ul>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">关闭</button></div></div></li>
+		</ul>
+	</div>
+</div>
+</form>
+<script>
+    var stuBox = document.getElementById("student");
+    var content = document.getElementById("setContent");
+    var inputbox = document.getElementById("getInput");
+    var studentName = document.getElementById("studentName");
+
+    document.getElementById("checkStu").onchange = function () {
+        stuBox.style.display = "block";
+        content.innerText = "班级";
+        $(inputbox).attr("suggestUrl", "/Info/GetClass").val("");
+        studentName.className = "required";
+    }
+    document.getElementById("checkTea").onchange = function () {
+        stuBox.style.display = "none";
+        content.innerText = "姓名";
+        $(inputbox).attr("suggestUrl", "/Info/GetNikeName").val("");
+        studentName.className = "";
+    }
+</script>

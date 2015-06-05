@@ -1,0 +1,53 @@
+﻿@model MailManager.Models.T_Base_Mail
+@{
+    ViewBag.Title = "Other";
+    Layout = null;
+}
+
+<h2 class="contentTitle">代取信件登记</h2>
+
+
+<div class="pageContent">
+	
+	<form method="post" action="/Mail/otherdelete" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+		<div class="pageFormContent nowrap" layoutH="97">
+            <input type="hidden" name="ID" value="@Model.ID" />
+			<dl>
+				<dt>编号：</dt>
+				<dd>
+					<input type="text" disabled="disabled"  value="@Model.Number"/>
+				</dd>
+			</dl>
+            <dl>
+				<dt>原取件人：</dt>
+				<dd>
+					<input type="text" disabled="disabled"  value="@Model.Name"/>
+				</dd>
+			</dl>
+            <dl>
+				<dt>姓名：</dt>
+				<dd>
+					<input type="text" name="Pname" class="required" />
+					<span class="info">代取人的姓名</span>
+				</dd>
+			</dl>
+            <dl>
+				<dt>电话：</dt>
+				<dd>
+					<input type="text" name="Phone" class="phone required" />
+					<span class="info">代取人的联系电话</span>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+</div>
+
+
+

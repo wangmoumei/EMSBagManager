@@ -1,0 +1,34 @@
+﻿
+@{
+    Layout = null;
+}
+
+<h2 class="contentTitle">修改密码</h2>
+
+
+<div class="pageContent">
+	
+	<form method="post" action="/login/SaveChange" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+		<div class="pageFormContent nowrap" layoutH="97">
+			<dl>
+				<dt>密码：</dt>
+				<dd>
+					<input id="w_validation_pwd" type="password" name="password" class="required alphanumeric textInput valid" minlength="6" maxlength="20" alt="字母、数字、下划线 6-20位">
+				</dd>
+			</dl>
+            <dl>
+				<dt>确认密码：</dt>
+				<dd>
+					<input type="password" name="repassword" class="required textInput valid" equalto="#w_validation_pwd">
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+</div>
+

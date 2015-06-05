@@ -1,0 +1,33 @@
+﻿@model MailManager.Models.T_Base_Admin
+@{
+    Layout = null;
+}
+
+<h2 class="contentTitle">修改密码</h2>
+
+
+<div class="pageContent">
+	
+	<form method="post" action="/login/Saveedit" class="pageForm required-validate" onsubmit="return validateCallback(this)">
+		<div class="pageFormContent nowrap" layoutH="97">
+            
+            <dl>
+				<dt>管理员姓名：</dt>
+				<dd>
+					<input type="text" name="NickName" class="" value="@Model.NickName">
+			</dl>
+			<dl>
+				<dt>邮箱：</dt>
+				<dd>
+					<input type="text" name="email" class="email textInput error" alt="请输入您的电子邮件" value="@Model.Email" id="email_2177">
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+</div>
+
